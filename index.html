@@ -535,6 +535,7 @@ footer{background:#0F172A;color:#fff;padding:52px 6vw 28px}
         name="spreadfix-contact"
         method="POST"
         data-netlify="true"
+        enctype="multipart/form-data"
         netlify-honeypot="bot-field"
         action="/"
         onsubmit="return validateForm(event)">
@@ -674,14 +675,13 @@ function validateForm(e){
 
   var form = document.getElementById('contactForm');
 
-  // Netlify Forms AJAX submission: URL-encoded + form-name.
-  var params = new URLSearchParams(new FormData(form));
+  // Netlify Forms AJAX submission with multipart/form-data for file uploads.
+  var formData = new FormData(form);
 
   // POST to root so Netlify receives a stable path and avoids 404s.
   fetch('/', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    body: params.toString()
+    body: formData
   })
   .then(function(res){
     if(res.ok){
